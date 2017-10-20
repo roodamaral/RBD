@@ -1,0 +1,35 @@
+<h1>Welcome, <%=current_user.first_name%></h1>
+
+<div style="display: inline-block; width: 100%">
+
+<div style=" width: 20%; vertical-align: top; border: 1px solid black; text-align: center; margin-left: 500px">
+<h1>Add Organization</h1>
+
+<form action="/groups/create" method="post">
+	<input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+	<label>Name:</label>
+	<input type="text" name="name"><br><br>
+	<label>Description:</label>
+	<textarea name="description" style="width: 200px; height: 50px"></textarea><br><br>
+	<input type="submit" value="Create Organization">
+</form>
+</div><br><br>
+
+<div style="width: 80%; vertical-align:">
+<% @groups.each do |group| %>
+
+<h4> <a href="/groups/<%= group.id %>"> <%= group.name %></a></h4>
+<p>Members: <%= group.members_joined.count %></p>
+<p><%= group.description %></p>
+<% if current_user == group.user %>
+  	<form action="/groups/destroy" method="post">
+  		<input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+		<input type="hidden" name="group_id" value="<%= group.id %>">
+  		<input type="submit" value="Delete">
+  	</form>  
+<% end %>
+</div>
+
+<% end %>
+
+</div>
