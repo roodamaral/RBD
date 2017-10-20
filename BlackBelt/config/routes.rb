@@ -23,6 +23,8 @@ Rails.application.routes.draw do
 
   get 'sessions/new'
 
+  root 'users#new'
+
   delete 'sessions/:id' => 'sessions#destroy'
 
   # The priority is based upon order of creation: first created -> highest priority.
